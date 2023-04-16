@@ -1,0 +1,59 @@
+{% extends "AppCoder/padre.html" %}
+
+{% load static %}
+
+{% block Pagtitulo %}Géneros{% endblock %}
+
+{% block titulo %}<h1>Bienvenidos a la pagina de Géneros!</h1>{% endblock %}
+
+{% block contenido_que_cambia %}
+
+<h5 class='text-muted'>{{ mensaje }}</h5>
+<table>
+    <tr>
+        <td>
+            <form action="{% url 'GenBus' %}" method="GET"> 
+                <input type="text" name="genero" id="genero" placeholder="Filtrar Géneros" />
+                <input type="submit" value="Filtrar" />
+                {% if filtro %}&nbsp;&nbsp;&nbsp;&nbsp;<a class="btn btn-secondary" href="{% url 'Gen' %}">Remover Filtro "{{ filtro }}"</a>{% endif %}
+                &nbsp;&nbsp;&nbsp;&nbsp;<a class="btn btn-primary" href="{% url 'GenCre' %}">Agregar Género +</a>&nbsp;&nbsp;&nbsp;&nbsp;                          
+            </form>
+        </td>
+    </tr>
+</table>
+
+{% if generos %}
+<table>
+    <thead>
+        <tr>
+            <th>Imagen</th>            
+            <th>Nombre</th>
+            <th>Descripción</th>
+            <th>OPCIONES</th>
+        </tr>
+    </thead>
+    <tbody>
+
+        {% for genero in generos %}
+        <tr>
+            <td>
+                <a href="/AppCoder{{ genero.imagen.url }}" target="_blank"><img src="/AppCoder{{ genero.imagen.url }}" height="40" width="40" /></a>
+            </td>            
+            <td>
+                {{ genero.nombre}}
+            </td>
+            <td>
+                {{ genero.descripcion}}
+            </td>
+            <td>
+                <nobr>
+                    <a class="btn btn-success" href="{% url 'GenEdi' genero.id  %}">Editar</a>
+                    <a class="btn btn-danger" href="{% url  'GenEli' genero.id  %}">Eliminar </a>
+                </nobr>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endif %}
+{% endblock %}

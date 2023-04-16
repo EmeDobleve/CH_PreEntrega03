@@ -1,0 +1,27 @@
+{% extends "AppCoder/padre.html" %}
+
+{% load static %}
+
+{% block Pagtitulo %}Creación de Géneros{% endblock %}
+
+{% block titulo %}<h1>Bienvenidos a la pagina de Creación de Géneros!</h1>{% endblock %}
+
+{% block contenido_que_cambia %}
+
+<h5 class='text-muted'>{{ mensaje }}</h5>
+
+<table>
+    <tr>
+        <td>
+            <form action="{% url 'GenCre' %}" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <table>
+                {{ form.as_table }}
+                </table>
+                <input type="submit" value="Crear el Género">      
+                <input type="button" value="Cancelar" onclick="document.location='{% url 'Gen' %}';">            
+            </form>
+        </td>
+    </tr>
+</table>
+{% endblock %}

@@ -1,0 +1,59 @@
+{% extends "AppCoder/padre.html" %}
+
+{% load static %}
+
+{% block Pagtitulo %}Directores{% endblock %}
+
+{% block titulo %}<h1>Bienvenidos a la pagina de Directores!</h1>{% endblock %}
+
+{% block contenido_que_cambia %}
+
+<h5 class='text-muted'>{{ mensaje }}</h5>
+<table>
+    <tr>
+        <td>
+            <form action="{% url 'DirBus' %}" method="GET"> 
+                <input type="text" name="director" id="director" placeholder="Filtrar por Apellidos" />
+                <input type="submit" value="Filtrar" />
+                {% if filtro %}&nbsp;&nbsp;&nbsp;&nbsp;<a class="btn btn-secondary" href="{% url 'Dir' %}">Remover Filtro "{{ filtro }}"</a>{% endif %}
+                &nbsp;&nbsp;&nbsp;&nbsp;<a class="btn btn-primary" href="{% url 'DirCre' %}">Agregar Director +</a>&nbsp;&nbsp;&nbsp;&nbsp;                         
+            </form>
+        </td>
+    </tr>
+</table>
+
+{% if directores %}
+<table>
+    <thead>
+        <tr>
+            <th>Foto</th>
+            <th>Nombre</th>
+            <th>Apellido</th>
+            <th>OPCIONES</th>
+        </tr>
+    </thead>
+    <tbody>
+
+        {% for director in directores %}
+        <tr>
+            <td>
+                <a href="/AppCoder{{ director.foto.url }}" target="_blank"><img src="/AppCoder{{ director.foto.url }}" height="40" width="40" /></a>
+            </td>  
+            <td>
+                {{ director.nombre}}
+            </td>
+            <td>
+                {{ director.apellido}}
+            </td>
+            <td>
+                <nobr>
+                    <a class="btn btn-success" href="{% url 'DirEdi' director.id  %}">Editar</a>
+                    <a class="btn btn-danger" href="{% url  'DirEli' director.id  %}">Eliminar </a>
+                </nobr>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endif %}
+{% endblock %}

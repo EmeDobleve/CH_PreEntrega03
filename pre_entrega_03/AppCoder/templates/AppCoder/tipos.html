@@ -1,0 +1,59 @@
+{% extends "AppCoder/padre.html" %}
+
+{% load static %}
+
+{% block Pagtitulo %}Tipos{% endblock %}
+
+{% block titulo %}<h1>Bienvenidos a la pagina de Tipos!</h1>{% endblock %}
+
+{% block contenido_que_cambia %}
+
+<h5 class='text-muted'>{{ mensaje }}</h5>
+<table>
+    <tr>
+        <td>
+            <form action="{% url 'TipBus' %}" method="GET"> 
+                <input type="text" name="tipo" id="tipo" placeholder="Filtrar Tipos" />
+                <input type="submit" value="Filtrar" />
+                {% if filtro %}&nbsp;&nbsp;&nbsp;&nbsp;<a class="btn btn-secondary" href="{% url 'Tip' %}">Remover Filtro "{{ filtro }}"</a>{% endif %}
+                &nbsp;&nbsp;&nbsp;&nbsp;<a class="btn btn-primary" href="{% url 'TipCre' %}">Agregar Tipo +</a>&nbsp;&nbsp;&nbsp;&nbsp;                       
+            </form>
+        </td>
+    </tr>
+</table>
+
+{% if tipos %}
+<table>
+    <thead>
+        <tr>
+            <th>Imagen</th>            
+            <th>Nombre</th>
+            <th>Descripción</th>
+            <th>OPCIONES</th>
+        </tr>
+    </thead>
+    <tbody>
+
+        {% for tipo in tipos %}
+        <tr>
+            <td>
+                <a href="/AppCoder{{ tipo.imagen.url }}" target="_blank"><img src="/AppCoder{{ tipo.imagen.url }}" height="40" width="40" /></a>
+            </td>
+            <td>
+                {{ tipo.nombre}}
+            </td>
+            <td>
+                {{ tipo.descripcion}}
+            </td>
+            <td>
+                <nobr>
+                    <a class="btn btn-success" href="{% url 'TipEdi' tipo.id  %}">Editar</a>
+                    <a class="btn btn-danger" href="{% url  'TipEli' tipo.id  %}">Eliminar </a>
+                </nobr>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endif %}
+{% endblock %}

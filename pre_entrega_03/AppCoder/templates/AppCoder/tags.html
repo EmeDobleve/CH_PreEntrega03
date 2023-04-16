@@ -1,0 +1,51 @@
+{% extends "AppCoder/padre.html" %}
+
+{% load static %}
+
+{% block Pagtitulo %}Tags{% endblock %}
+
+{% block titulo %}<h1>Bienvenidos a la pagina de Tags!</h1>{% endblock %}
+
+{% block contenido_que_cambia %}
+
+<h5 class='text-muted'>{{ mensaje }}</h5>
+<table>
+    <tr>
+        <td>
+            <form action="{% url 'TagBus' %}" method="GET"> 
+                <input type="text" name="tag" id="tag" placeholder="Filtrar Tags" />
+                <input type="submit" value="Filtrar" />
+                {% if filtro %}&nbsp;&nbsp;&nbsp;&nbsp;<a class="btn btn-secondary" href="{% url 'Tag' %}">Remover Filtro "{{ filtro }}"</a>{% endif %}
+                &nbsp;&nbsp;&nbsp;&nbsp;<a class="btn btn-primary" href="{% url 'TagCre' %}">Agregar Tag +</a>&nbsp;&nbsp;&nbsp;&nbsp;                    
+            </form>
+        </td>
+    </tr>
+</table>
+
+{% if tags %}
+<table>
+    <thead>
+        <tr>
+            <th>Etiqueta</th>
+            <th>OPCIONES</th>
+        </tr>
+    </thead>
+    <tbody>
+
+        {% for tag in tags %}
+        <tr>
+            <td>
+                {{ tag.tag}}
+            </td>
+            <td>
+                <nobr>
+                    <a class="btn btn-success" href="{% url 'TagEdi' tag.id  %}">Editar</a>
+                    <a class="btn btn-danger" href="{% url  'TagEli' tag.id  %}">Eliminar </a>
+                </nobr>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endif %}
+{% endblock %}

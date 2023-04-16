@@ -1,0 +1,114 @@
+{% extends "AppCoder/padre.html" %}
+
+{% load static %}
+
+{% block Pagtitulo %}Películas{% endblock %}
+
+{% block titulo %}<h1>Bienvenidos a la pagina de Películas!</h1>{% endblock %}
+
+{% block contenido_que_cambia %}
+
+<h5 class='text-muted'>{{ mensaje }}</h5>
+<table>
+    <tr>
+        <td>
+            <form action="{% url 'PelBus' %}" method="GET"> 
+                <input type="text" name="pelicula" id="pelicula" placeholder="Peliculas a Visualizar" />
+                <input type="submit" value="Filtrar" />
+                {% if filtro %}&nbsp;&nbsp;&nbsp;&nbsp;<a class="btn btn-secondary" href="{% url 'Pel' %}">Remover Filtro "{{ filtro }}"</a>{% endif %}
+                &nbsp;&nbsp;&nbsp;&nbsp;<a class="btn btn-primary" href="{% url 'PelCre' %}">Agregar Película +</a>&nbsp;&nbsp;&nbsp;&nbsp;
+            </form>
+        </td>
+    </tr>
+</table>
+
+{% if peliculas %}
+<table>
+    <tbody>
+    <tr>
+        {% for pelicula in peliculas %}
+        <tr>
+            <th>Nombre:</th>
+            <td>
+                <h1>{{ pelicula.nombre}}</h1>
+            </td>
+        </tr>
+        <tr>
+            <th>Portada:</th>
+            <td>
+                <a href="/AppCoder{{ pelicula.portada.url }}" target="_blank"><img src="/AppCoder{{ pelicula.portada.url }}" height="200" width="200" /></a>
+            </td>  
+        </tr>
+        <tr>
+            <th> Resumen</th>
+            <td>
+                {{ pelicula.resumen}}
+            </td>
+        </tr>
+        <tr>
+            <th> Director</th>
+            <td>
+                {{ pelicula.director }}
+            </td>
+        </tr>         
+        <tr>
+            <th> Link IMDB</th>
+            <td>
+                {{ pelicula.imdb_link}}
+            </td>
+        </tr>        
+        <tr>
+            <th> ¿Por qué lo recomiendo?</th>
+            <td>
+                {{ pelicula.motivo_recomendacion }}
+            </td>
+        </tr>        
+        <tr>
+            <th> Valoración</th>
+            <td>
+                {{ pelicula.valoracion }}
+            </td>
+        </tr>    
+        <tr>
+            <th> Año de Publicación:</th>
+            <td>
+                {{ pelicula.anio }}
+            </td>
+        </tr>    
+        <tr>
+            <th> Artista Destacado:</th>
+            <td>
+                {{ pelicula.act_destacado }}
+            </td>
+        </tr>                         
+        <tr>
+            <th> Géneros:</th>
+            <td>
+                {{ pelicula.genero }}
+            </td>
+        </tr>                         
+        <tr>
+            <th> Etiquetas:</th>
+            <td>
+                {{ pelicula.tag }}
+            </td>
+        </tr>                                         
+        <tr><td colspan="2">&nbsp;</td></tr>
+        <tr>
+            <td colspan="2">
+                <center>
+                    <nobr>
+                        <a class="btn btn-success" href="{% url 'PelEdi' pelicula.id  %}">Editar</a>
+                        <a class="btn btn-danger" href="{% url  'PelEli' pelicula.id  %}">Eliminar </a>
+                    </nobr>
+                </center>
+            </td>
+        </tr>
+        <tr><td colspan="2">&nbsp;</td></tr>
+        <tr><td colspan="2"><hr widh="100%" /></td></tr>
+        <tr><td colspan="2">&nbsp;</td></tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,58 @@
+{% extends "AppCoder/padre.html" %}
+
+{% load static %}
+
+{% block Pagtitulo %}Actrices y Actores{% endblock %}
+
+{% block titulo %}<h1>Bienvenidos a la pagina de Actrices y Actores!</h1>{% endblock %}
+
+{% block contenido_que_cambia %}
+
+<h5 class='text-muted'>{{ mensaje }}</h5>
+<table>
+    <tr>
+        <td>
+            <form action="{% url 'ActBus' %}" method="GET"> 
+                <input type="text" name="act" id="act" placeholder="Filtrar por Apellido" />
+                <input type="submit" value="Filtrar" />
+                {% if filtro %}&nbsp;&nbsp;&nbsp;&nbsp;<a class="btn btn-secondary" href="{% url 'Act' %}">Remover Filtro "{{ filtro }}"</a>{% endif %}
+                &nbsp;&nbsp;&nbsp;&nbsp;<a class="btn btn-primary" href="{% url 'ActCre' %}">Agregar Artista +</a>&nbsp;&nbsp;&nbsp;&nbsp;                                  
+            </form>
+        </td>
+    </tr>
+</table>
+
+{% if acts %}
+<table>
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Apellido</th>
+            <th>OPCIONES</th>
+        </tr>
+    </thead>
+    <tbody>
+
+        {% for act in acts %}
+        <tr>
+            <td>
+                <a href="/AppCoder{{ act.foto.url }}" target="_blank"><img src="/AppCoder{{ act.foto.url }}" height="40" width="40" /></a>
+            </td>              
+            <td>
+                {{ act.nombre}}
+            </td>
+            <td>
+                {{ act.apellido}}
+            </td>
+            <td>
+                <nobr>
+                    <a class="btn btn-success" href="{% url 'ActEdi' act.id  %}">Editar</a>
+                    <a class="btn btn-danger" href="{% url  'ActEli' act.id  %}">Eliminar </a>
+                </nobr>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endif %}
+{% endblock %}
